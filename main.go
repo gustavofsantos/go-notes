@@ -57,7 +57,7 @@ func ParseLineLookingForMeeting(line string) (bool, Meeting) {
   }
 
   var state string
-  switch result["state"] {
+  switch result["status"] {
   case " ":
     state = TODO
   case "x":
