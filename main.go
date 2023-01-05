@@ -1,11 +1,12 @@
 package main
 
 import (
-  "fmt"
-  "os"
-  "regexp"
-  "strings"
-  "time"
+	"fmt"
+	"os"
+	"os/exec"
+	"regexp"
+	"strings"
+	"time"
 )
 
 const TODO = "TODO"
@@ -21,6 +22,10 @@ type Meeting struct {
   hour string
   minutes string
   state string
+}
+
+type Notification struct {
+  text string
 }
 
 // read this from a config file in the future
@@ -89,6 +94,13 @@ func ParseMeetings(journal string) []Meeting {
   return meetings
 }
 
+func Notify(notification Notification) {
+  err := exec.Command("notify-send", "-u", "critical", "Atenção: Reunião", fmt.Sprintf("%s", notification.text)).Run()
+  if err != nil {
+    panic(err)
+  }
+}
+
 func main() {
   config := GetConfig()
   filename := AppendMarkdownExtension(GetTodayDateAsString())
@@ -99,6 +111,17 @@ func main() {
   }
   journal := string(filedata)
   meetings := ParseMeetings(journal)
+  now := time.Now()
+  hour := fmt.Sprintf("%02d", now.Local().Hour())
+  minutes := fmt.Sprintf("%02d", now.Local().Minute())
 
   fmt.Printf("meetings today: %q", meetings)
+  fmt.Printf("now: %s:%s\n", hour, minutes)
+
+  for _, meeting := range meetings {
+    if hour == meeting.hour && minutes == meeting.minutes {
+      notification := Notification{ text: meeting.text }
+      Notify(notification)
+    }
+  }
 }
