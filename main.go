@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"regexp"
@@ -104,7 +105,7 @@ func NotifyGnome(notification Notification) {
 func NotifyTmux(notification Notification) {
   err := exec.Command("tmux", "display-message", "-d", "5000", fmt.Sprintf("%s", notification.text)).Run()
   if err != nil {
-    panic(err)
+    log.Println("Error displaying using tmux. Tmux is running?")
   }
 }
 
