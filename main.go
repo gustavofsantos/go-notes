@@ -94,8 +94,15 @@ func ParseMeetings(journal string) []Meeting {
   return meetings
 }
 
-func Notify(notification Notification) {
+func NotifyGnome(notification Notification) {
   err := exec.Command("notify-send", "-u", "critical", "Atenção: Reunião", fmt.Sprintf("%s", notification.text)).Run()
+  if err != nil {
+    panic(err)
+  }
+}
+
+func NotifyTmux(notification Notification) {
+  err := exec.Command("tmux", "display-message", "-d", "5000", fmt.Sprintf("%s", notification.text)).Run()
   if err != nil {
     panic(err)
   }
@@ -121,7 +128,8 @@ func main() {
   for _, meeting := range meetings {
     if hour == meeting.hour && minutes == meeting.minutes {
       notification := Notification{ text: meeting.text }
-      Notify(notification)
+      NotifyGnome(notification)
+      NotifyTmux(notification)
     }
   }
 }
