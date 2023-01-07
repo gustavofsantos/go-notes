@@ -16,6 +16,20 @@ But also, I'd like to get notified when I need to attend a meeting, so I created
 this project alongside with a [systemd service and timer]() that triggers this
 program every minute to check if I need to attend a meeting.
 
+My journals have this structure:
+
+```md
+## Meetings
+- [ ] 10:00 Daily
+- [ ] 14:30 1:1 with some person
+
+## Tasks
+- [ ] I need to get this done
+
+## Notes
+blah blah
+```
+
 I also spend almost all my time during coding inside a TMUX server, running
 inside Alacritty occupying the whole screen and hiding interruptions, this is
 why I also need to get notified at TMUX.
