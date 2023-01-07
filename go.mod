@@ -1,3 +1,3 @@
-module gustavofsantos/notes
+module notes
 
 go 1.19
