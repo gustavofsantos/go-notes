@@ -38,3 +38,31 @@ why I also need to get notified at TMUX.
 
 Clone this directory anywhere and then run `go build -o notes && mv notes
 ~/.bin/notes`.
+
+My [dotfiles]() are my home directory. To enable the systemd service and timer,
+I must run:
+
+```
+$ systemctl --user enable schedule-notes.service
+$ systemctl --user enable schedule-notes.timer
+```
+
+Then run the following command to start the timer service:
+
+```
+$ systemctl --user start schedule-notes.timer
+```
+
+The service must be running now
+
+```
+$ systemctl --user status schedule-notes.timer
+
+● schedule-notes.timer - Schedule a message every 1 minute
+     Loaded: loaded (/home/gustavo/.config/systemd/user/schedule-notes.timer; enabled; vendor preset: enabl>
+     Active: active (running) since Sat 2023-01-07 12:14:21 -03; 2min 26s ago
+    Trigger: n/a
+   Triggers: ● schedule-notes.service
+
+Jan 07 12:14:21 tinhoso-pop systemd[2701]: Started Schedule a message every 1 minute.
+```
