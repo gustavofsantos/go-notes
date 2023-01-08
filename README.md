@@ -37,7 +37,7 @@ why I also need to get notified at TMUX.
 ## Setup
 
 Clone this directory anywhere and then run `go build -o notes && mv notes
-~/.bin/notes`.
+~/.local/bin/notes`.
 
 My [dotfiles]() are my home directory. To enable the systemd service and timer,
 I must run:
