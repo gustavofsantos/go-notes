@@ -7,8 +7,8 @@ import (
 	"os/exec"
 	"time"
 
+	"notes/config"
 	"notes/core"
-  "notes/config"
 )
 
 type Notification struct {
@@ -44,9 +44,9 @@ func NotifyTmux(notification Notification) {
 }
 
 func main() {
-	config := config.GetConfig()
+	cfg := config.GetConfig()
 	filename := AppendMarkdownExtension(GetTodayDateAsString())
-	filepath := GetFilePath(config.path, filename)
+	filepath := GetFilePath(config.GetPath(cfg), filename)
 	filedata, err := os.ReadFile(filepath)
 	if err != nil {
 		panic(err)
