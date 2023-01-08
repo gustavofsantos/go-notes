@@ -13,9 +13,9 @@ type Notification struct {
 var HANDLERS = []func(n *Notification){notifyGnome, notifyTmux}
 
 func HandleNotification(notification *Notification) {
-  for _, handler := range HANDLERS {
-    handler(notification)
-  }
+	for _, handler := range HANDLERS {
+		handler(notification)
+	}
 }
 
 func notifyGnome(notification *Notification) {
@@ -31,4 +31,3 @@ func notifyTmux(notification *Notification) {
 		log.Println("Error displaying using tmux. Tmux is running?")
 	}
 }
-

@@ -9,24 +9,10 @@ import (
 	"notes/core"
 )
 
-func GetTodayDateAsString(now time.Time) string {
-	layout := "2006-01-02"
-	return fmt.Sprintf("%s.md", now.Format(layout))
-}
-
-func AppendMarkdownExtension(date string) string {
-	return date + ".md"
-}
-
-func GetFilePath(notesPath string, filename string) string {
-	return notesPath + "journal/" + filename
-}
-
-
 func main() {
 	cfg := config.GetConfig()
-	filename := AppendMarkdownExtension(GetTodayDateAsString(time.Now()))
-	filepath := GetFilePath(config.GetPath(cfg), filename)
+	filename := core.GetTodayDateAsString(time.Now())
+	filepath := core.GetFilePath(config.GetPath(cfg), filename)
 	filedata, err := os.ReadFile(filepath)
 	if err != nil {
 		panic(err)
@@ -43,7 +29,7 @@ func main() {
 		text := core.GetText(meeting)
 		if hour == meetingHour && minutes == meetingMinutes {
 			notification := &Notification{text: text}
-      HandleNotification(notification)
+			HandleNotification(notification)
 		}
 	}
 }
