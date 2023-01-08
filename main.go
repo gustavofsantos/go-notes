@@ -8,19 +8,11 @@ import (
 	"time"
 
 	"notes/core"
+  "notes/config"
 )
-
-type Config struct {
-	path string
-}
 
 type Notification struct {
 	text string
-}
-
-// read this from a config file in the future
-func GetConfig() Config {
-	return Config{path: "/home/gustavo/notes/"}
 }
 
 func GetTodayDateAsString() string {
@@ -52,7 +44,7 @@ func NotifyTmux(notification Notification) {
 }
 
 func main() {
-	config := GetConfig()
+	config := config.GetConfig()
 	filename := AppendMarkdownExtension(GetTodayDateAsString())
 	filepath := GetFilePath(config.path, filename)
 	filedata, err := os.ReadFile(filepath)
