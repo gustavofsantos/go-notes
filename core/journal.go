@@ -2,6 +2,7 @@ package core
 
 import (
 	"fmt"
+	"path"
 	"time"
 )
 
@@ -11,5 +12,5 @@ func GetTodayDateAsString(now time.Time) string {
 }
 
 func GetFilePath(notesPath string, filename string) string {
-	return notesPath + "journal/" + filename
+	return path.Join(notesPath, "/journal/", filename)
 }
