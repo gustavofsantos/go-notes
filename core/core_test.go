@@ -36,3 +36,27 @@ func TestGetText(t *testing.T) {
 		t.Fatalf("Expected %s, got %s", TEXT, GetText(meeting))
 	}
 }
+
+func TestGetHour(t *testing.T) {
+	meeting := NewMeeting(TEXT, HOUR, MINUTES, STATE)
+
+	if GetHour(meeting) != HOUR {
+		t.Fatalf("Expected 10, got %s", GetHour(meeting))
+	}
+}
+
+func TestGetMinutes(t *testing.T) {
+	meeting := NewMeeting(TEXT, HOUR, MINUTES, STATE)
+
+	if GetMinutes(meeting) != MINUTES {
+		t.Fatalf("Expected 30, got %s", GetMinutes(meeting))
+	}
+}
+
+func TestGetState(t *testing.T) {
+	meeting := NewMeeting(TEXT, HOUR, MINUTES, STATE)
+
+	if GetState(meeting) != STATE {
+		t.Fatalf("Expected TODO, got %s", GetState(meeting))
+	}
+}
