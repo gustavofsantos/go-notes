@@ -13,7 +13,7 @@ meetings and notes in general. I use `marksman` LSP to link my notes and quick
 jump between them.
 
 But also, I'd like to get notified when I need to attend a meeting, so I created
-this project alongside with a [systemd service and timer]() that triggers this
+this project alongside with a [systemd service and timer](https://github.com/gustavofsantos/dotfiles-public/tree/main/.config/systemd/user) that triggers this
 program every minute to check if I need to attend a meeting.
 
 My journals have this structure:
@@ -39,7 +39,7 @@ why I also need to get notified at TMUX.
 Clone this directory anywhere and then run `go build -o notes && mv notes
 ~/.local/bin/notes`.
 
-My [dotfiles]() are my home directory. To enable the systemd service and timer,
+My [dotfiles](https://github.com/gustavofsantos/dotfiles-public) are my home directory. To enable the systemd service and timer,
 I must run:
 
 ```
