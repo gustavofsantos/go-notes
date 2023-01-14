@@ -1,9 +1,13 @@
 package core
 
 import (
+	"fmt"
+	"log"
 	"regexp"
 	"strings"
 )
+
+const lineMeetingRegex = `^.*-\s\[(?P<state>\s|x|-)\]\s(?P<hour>\d\d):(?P<minute>\d\d)\s(?P<text>.+)$`
 
 func ParseMeetings(journal string) []*Meeting {
 	lines := strings.Split(journal, "\n")
@@ -31,18 +35,24 @@ func ParseLineLookingForMeeting(line string) (bool, *Meeting) {
 			result[name] = matches[i]
 		}
 	}
-
-	var state string
-	switch result["status"] {
-	case " ":
-		state = TODO
-	case "x":
-		state = DONE
-	case "-":
-		state = DOING
-	default:
-		state = DONE
+	state, err := parseMeetingState(result["state"])
+	if err != nil {
+		log.Printf(err.Error())
+		return false, &Meeting{}
 	}
 
 	return true, NewMeeting(result["text"], result["hour"], result["minute"], state)
+}
+
+func parseMeetingState(state string) (MeetingState, error) {
+	switch state {
+	case " ":
+		return TODO, nil
+	case "x":
+		return DONE, nil
+	case "-":
+		return DOING, nil
+	default:
+		return "", fmt.Errorf("state %s is not recognized", state)
+	}
 }

@@ -4,16 +4,16 @@ const TODO = "TODO"
 const DOING = "DOING"
 const DONE = "DONE"
 
-const lineMeetingRegex = `^.*-\s\[(?P<status>\s|x|-)\]\s(?P<hour>\d\d):(?P<minute>\d\d)\s(?P<text>.+)$`
+type MeetingState string
 
 type Meeting struct {
 	text    string
 	hour    string
 	minutes string
-	state   string
+	state   MeetingState
 }
 
-func NewMeeting(text, hour, minutes, state string) *Meeting {
+func NewMeeting(text, hour, minutes string, state MeetingState) *Meeting {
 	return &Meeting{
 		text:    text,
 		hour:    hour,
@@ -34,6 +34,6 @@ func GetMinutes(meeting *Meeting) string {
 	return meeting.minutes
 }
 
-func GetState(meeting *Meeting) string {
+func GetState(meeting *Meeting) MeetingState {
 	return meeting.state
 }
