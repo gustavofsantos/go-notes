@@ -24,28 +24,20 @@ func ParseMeetings(journal string) []*Meeting {
 }
 
 func ParseLineLookingForMeeting(line string) (bool, *Meeting) {
-	re := regexp.MustCompile(lineMeetingRegex)
   reAlt := regexp.MustCompile(lineMeetingAltRegex)
-	matches := re.FindStringSubmatch(line)
   matchesAlt := reAlt.FindStringSubmatch(line)
-	if len(matches) == 0 && len(matchesAlt) == 0 {
+	if len(matchesAlt) == 0 {
 		return false, &Meeting{}
 	}
 
 	result := make(map[string]string)
-	for i, name := range re.SubexpNames() {
-		if i != 0 && name != "" {
-			result[name] = matches[i]
-		}
-	}
-
   for i, name := range reAlt.SubexpNames() {
     if i != 0 && name != "" {
       result[name] = matchesAlt[i]
     }
   }
 
-	state, err := parseMeetingState(result["state"])
+	state, err := parseMeetingState(result["status"])
 	if err != nil {
 		log.Printf(err.Error())
 		return false, &Meeting{}
@@ -69,6 +61,6 @@ func parseMeetingState(state string) (MeetingState, error) {
   case "DOING":
     return DOING, nil
 	default:
-		return "", fmt.Errorf("state %s is not recognized", state)
+		return "", fmt.Errorf("state '%s' is not recognized", state)
 	}
 }
